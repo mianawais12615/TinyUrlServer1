@@ -13,7 +13,9 @@ app.use(cors());
 app.use(express.json());
 
 console.log(generateShortId(9));
-ConnectMongoDb();
+
+// Connect to MongoDB before starting server
+await ConnectMongoDb();
 
 app.use("/", URLRoute);
 
