@@ -3,22 +3,15 @@ import { URLs } from "../Models/url.js";
 export const RedirectURL = async (req, res) => {
   const { shortId } = req.params;
   try {
-    const url = await URLs.findOne({ shortId: shortId });
-    
-    if (!url) {
-      return res.status(404).json({
-        ok: false,
-        message: "URL not found",
-      });
-    }
+    const resUrls = await URLs.find({ shortId: shortId });
+    const element = resUrls[0];
+    console.log(element);
 
-    console.log(`Redirecting ${shortId} to ${url.longUrl}`);
-    res.redirect(url.longUrl);
+    res.redirect(element.longUrl);
   } catch (err) {
-    console.error("Error redirecting:", err);
+    console.log(err);
     res.status(500).json({
       ok: false,
-      message: err.message || "Failed to redirect",
     });
   }
 };

@@ -9,16 +9,18 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+  }),
+);
 app.use(express.json());
 
 console.log(generateShortId(9));
-
-// Connect to MongoDB before starting server
-await ConnectMongoDb();
+ConnectMongoDb();
 
 app.use("/", URLRoute);
 
-app.listen(5050, () => {
+app.listen(process.env.PORT || 5050, () => {
   console.log("I am working");
 });
